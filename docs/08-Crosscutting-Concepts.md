@@ -5,5 +5,5 @@
 - **Image Scanning**: Einsatz von Tools wie Clair zur Sicherheitsüberprüfung von Container Images.
 
 ## 8.2 DevOps
-- **CI/CD Pipeline**: Verwendung von Jenkins für kontinuierliche Integration und Bereitstellung.
+- **CI/CD Pipeline**: Verwendung von GitHub CI Server für kontinuierliche Integration und Bereitstellung.
 - **Versionsverwaltung**: Nutzung von Git für die Versionskontrolle.

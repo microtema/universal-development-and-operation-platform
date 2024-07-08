@@ -9,7 +9,7 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 - Implementierung grundlegender Sicherheitsmaßnahmen.
 - Integration bestehender Umsysteme des Unternehmens.
 
-![kubernetes-workflow.png](./docs/images/kubernetes-workflow.png)
+![kubernetes-workflow.png](./docs/images/06-Runtime-View.png)
 
 # 2. Randbedingungen
 
@@ -26,9 +26,29 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 - **Sicherheitsanforderungen**: Basic Security
 - **Integration**: Umsysteme
 
-# Context and Scope
+# 3. Kontextabgrenzung
 
-See shared documentation
+## 3.1 Systemkontext
+- **Intern**: Kubernetes Cluster, CI/CD Tools (GitHub Action), Container Registry (Docker Hub), Monitoring und Logging (Prometheus, Grafana, EFK Stack), Sicherheitslösungen (RBAC, Image Scanning), API Gateway, Service Mesh (Istio).
+- **Extern**: Umsysteme des Unternehmens, externe Entwickler-Tools und -Dienste.
+
+## 3.2 Benutzerschnittstellen
+- Entwicklerzugang zu Entwicklungsumgebungen, CI/CD Pipelines, Monitoring Dashboards, Container Registry und API Gateway.
+
+---
+
+# 4. Lösungsstrategie
+
+## 4.1 Hauptziele
+- Einrichtung eines Kubernetes Clusters zur Bereitstellung der Plattform.
+- Bereitstellung von Entwicklungsumgebungen mit Open Source Tools.
+- Implementierung grundlegender Sicherheitsmaßnahmen.
+- Integration externer Systeme und Dienste.
+
+## 4.2 Entwurfsprinzipien
+- **Skalierbarkeit**: Berücksichtigung der Skalierbarkeit für bis zu 100 Entwickler.
+- **Sicherheit**: Implementierung von Basis-Sicherheitsmaßnahmen.
+- **Integration**: Planung der Anbindung externer Systeme.
 
 # 4. Lösungsstrategie
 
@@ -46,36 +66,55 @@ See shared documentation
 # 5. Bausteinsicht
 
 ## 5.1 Bausteindiagramm
-![Bausteindiagramm](https://dummyimage.com/600x400/000/fff&text=Bausteindiagramm)
+![05-Building-Block-View.png](./docs/images/05-Building-Block-View.png)
 
 ## 5.2 Bausteinbeschreibung
 
-- **Kubernetes Cluster**
-    - **Master Node**: Verwaltung und Steuerung des Clusters.
-    - **Worker Nodes**: Ausführung der Container.
+### **Kubernetes Cluster**
 
-- **Entwicklerumgebung**
-    - **CI/CD Tools**: Jenkins für die kontinuierliche Integration und Bereitstellung.
-    - **Version Control**: Git für die Versionsverwaltung.
+![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
 
-- **Container Registry**
-    - **Docker Hub**: Verwaltung und Speicherung von Container Images.
+- **Master Node**: Verwaltung und Steuerung des Clusters.
+- **Worker Nodes**: Ausführung der Container.
 
-- **Monitoring und Logging**
-    - **Prometheus**: Überwachung und Alarmierung.
-    - **Grafana**: Visualisierung der Metriken.
-    - **Elasticsearch, Fluentd, Kibana (EFK Stack)**: Zentrale Speicherung und Analyse von Logs.
+  
+### **Entwicklerumgebung**
 
-- **Security**
-    - **RBAC**: Verwaltung von Benutzerrechten.
-    - **Image Scanning**: Sicherheitsüberprüfung von Container Images (z.B. Clair).
 
-- **Integration von Umsystemen**
-    - **API Gateway**: Verwaltung der Schnittstellen zu externen Systemen.
-    - **Service Mesh**: Verwaltung der Kommunikation zwischen Microservices (z.B. Istio).
+- **CI/CD Tools**: Jenkins für die kontinuierliche Integration und Bereitstellung.
+- **Version Control**: Git für die Versionsverwaltung.
+
+### **Container Registry**
+
+
+- **Docker Hub**: Verwaltung und Speicherung von Container Images.
+
+### **Monitoring und Logging**
+
+
+- **Prometheus**: Überwachung und Alarmierung.
+- **Grafana**: Visualisierung der Metriken.
+- **Elasticsearch, Fluentd, Kibana (EFK Stack)**: Zentrale Speicherung und Analyse von Logs.
+
+### **Security**
+
+
+
+- **RBAC**: Verwaltung von Benutzerrechten.
+- **Image Scanning**: Sicherheitsüberprüfung von Container Images (z.B. Clair).
+
+### **Integration von Umsystemen**
+
+
+
+- **API Gateway**: Verwaltung der Schnittstellen zu externen Systemen.
+- **Service Mesh**: Verwaltung der Kommunikation zwischen Microservices (z.B. Istio).
+- **Datenbank Mesh**: Relationales Datenbank (z.B. Oracle).
 
 
 # 6. Laufzeitsicht
+
+![kubernetes-workflow.png](./docs/images/06-Runtime-View.png)
 
 ## 6.1 Hauptszenarien
 - **Deployment von Anwendungen**: Ablauf von der Code-Übernahme aus dem Repository, über die CI/CD Pipeline, bis zur Bereitstellung im Kubernetes Cluster.
@@ -98,7 +137,7 @@ See shared documentation
 - **Image Scanning**: Einsatz von Tools wie Clair zur Sicherheitsüberprüfung von Container Images.
 
 ## 8.2 DevOps
-- **CI/CD Pipeline**: Verwendung von Jenkins für kontinuierliche Integration und Bereitstellung.
+- **CI/CD Pipeline**: Verwendung von GitHub CI Server für kontinuierliche Integration und Bereitstellung.
 - **Versionsverwaltung**: Nutzung von Git für die Versionskontrolle.
 
 
