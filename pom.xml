@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.microtema</groupId>
+    <artifactId>universal-development-and-operation-platform</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Universal Development and Operation Platform</name>
+    <description>Universal Development and Operation Platform</description>
+    <url>http://maven.apache.org</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>de.microtema</groupId>
+                <artifactId>readmemd-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <configuration>
+                    <docDir>./docs</docDir>
+                    <outputFile>README.md</outputFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>readme-generator</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
