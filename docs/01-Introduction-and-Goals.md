@@ -9,4 +9,4 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 - Implementierung grundlegender Sicherheitsmaßnahmen.
 - Integration bestehender Umsysteme des Unternehmens.
 
-![kubernetes-workflow.png](./images/06-Runtime-View.png)
+![04-Context-And-Scope-View.png](./images/04-Context-And-Scope-View.png)
