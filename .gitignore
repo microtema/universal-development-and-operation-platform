@@ -193,4 +193,7 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+resources/*.bkp
+resources/*.dtmp
+
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,intellij,macos
