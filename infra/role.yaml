@@ -1,0 +1,65 @@
+# Schritt 1: Erstellen von Rollen und Cluster-Rollen
+#   Rollen (Roles) und Cluster-Rollen (ClusterRoles) definieren die Berechtigungen für bestimmte Aktionen auf Ressourcen.
+
+# Create a Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "watch", "list"]
+
+---
+# Create a ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-admin
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+
+# Schritt 2: Erstellen von Rollenbindungen und Cluster-Rollenbindungen
+#   Rollenbindungen (RoleBindings) und Cluster-Rollenbindungen (ClusterRoleBindings) verknüpfen Rollen bzw.
+#   Cluster-Rollen mit Benutzern, Gruppen oder Service Accounts.
+
+---
+
+# Erstellen einer Rollenbindung
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+  - kind: User
+    name: "jane"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+# Erstellen einer Cluster-Rollenbindung
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-binding
+subjects:
+  - kind: User
+    name: "john"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+# Überprüfung der RBAC-Implementierung
+# Um sicherzustellen, dass die RBAC-Richtlinien korrekt angewendet wurden, können Sie die Berechtigungen eines Benutzers überprüfen.
+#kubectl auth can-i get pods --namespace=default --as=jane
