@@ -9,7 +9,7 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 - Implementierung grundlegender Sicherheitsmaßnahmen.
 - Integration bestehender Umsysteme des Unternehmens.
 
-![04-Context-And-Scope-View.png](./images/04-Context-And-Scope-View.png)
+![04-Context-And-Scope-View.png](./docs/images/04-Context-And-Scope-View.png)
 
 # 2. Randbedingungen
 
@@ -60,7 +60,7 @@ Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, kö
 da es eine bewährte Methode zur Einrichtung von produktionsreifen Kubernetes-Clustern ist. 
 Hier ist eine detaillierte Schritt-für-Schritt-Anleitung:
 
-![05-Building-Block-View-Level-1.png](./images/05-Building-Block-View-Level-1.png)
+![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
 
 #### Voraussetzungen
 
@@ -482,13 +482,13 @@ dass Ihre Anwendungen und Daten geschützt sind.
 # 5. Bausteinsicht
 
 ## 5.1 Bausteindiagramm
-![05-Building-Block-View.png](./images/05-Building-Block-View.png)
+![05-Building-Block-View.png](./docs/images/05-Building-Block-View.png)
 
 ## 5.2 Bausteinbeschreibung
 
 ### **Kubernetes Cluster**
 
-![05-Building-Block-View-Level-1.png](./images/05-Building-Block-View-Level-1.png)
+![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
 
 - **Master Node**: Verwaltung und Steuerung des Clusters.
 - **Worker Nodes**: Ausführung der Container.
@@ -530,7 +530,7 @@ dass Ihre Anwendungen und Daten geschützt sind.
 
 # 6. Laufzeitsicht
 
-![kubernetes-workflow.png](./images/06-Runtime-View.png)
+![kubernetes-workflow.png](./docs/images/06-Runtime-View.png)
 
 ## 6.1 Hauptszenarien
 - **Deployment von Anwendungen**: Ablauf von der Code-Übernahme aus dem Repository, über die CI/CD Pipeline, bis zur Bereitstellung im Kubernetes Cluster.
