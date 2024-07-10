@@ -9,7 +9,7 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 - Implementierung grundlegender Sicherheitsmaßnahmen.
 - Integration bestehender Umsysteme des Unternehmens.
 
-![04-Context-And-Scope-View.png](./docs/images/04-Context-And-Scope-View.png)
+![04-Context-And-Scope-View.png](./images/04-Context-And-Scope-View.png)
 
 # 2. Randbedingungen
 
@@ -60,7 +60,7 @@ Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, kö
 da es eine bewährte Methode zur Einrichtung von produktionsreifen Kubernetes-Clustern ist. 
 Hier ist eine detaillierte Schritt-für-Schritt-Anleitung:
 
-![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
+![05-Building-Block-View-Level-1.png](./images/05-Building-Block-View-Level-1.png)
 
 #### Voraussetzungen
 
@@ -232,6 +232,42 @@ Dies bildet die Grundlage für die Bereitstellung komplexerer Anwendungen und Pl
 ---
 
 ### Bereitstellung von Entwicklungsumgebungen mit Open Source Tools.
+
+Die Bereitstellung von Entwicklungsumgebungen mit Open Source Tools in einem Kubernetes-Cluster kann durch die Nutzung von Containern und Kubernetes-Ressourcen wie Deployments, Services und Persistent Volumes erfolgen. Hier sind die Schritte, um eine Entwicklungsumgebung mit gängigen Open Source Tools wie Git, Jenkins, und einer Container Registry bereitzustellen.
+
+#### Bereitstellung von GitLab als Versionsverwaltung
+
+GitLab ist eine beliebte Open Source Lösung zur Verwaltung von Quellcode
+
+![04-gitlab.png](./images/04-gitlab.png)
+
+Installieren Sie GitLab mit Helm
+
+Installieren Sie Helm, falls es noch nicht installiert ist
+```
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+
+Fügen Sie das GitLab-Repository hinzu
+```
+helm repo add gitlab https://charts.gitlab.io/
+```
+
+Installieren Sie GitLab
+```
+helm upgrade --install gitlab gitlab/gitlab \
+   --timeout 600s   \
+   --set global.hosts.domain=$(minikube ip).nip.io \
+   --set global.hosts.externalIP=$(minikube ip) \
+   --set certmanager-issuer.email=microtema@web.de \
+   --set gitlab-runner.runners.privileged=true
+```
+
+[Setup gitlab on minikube using helm3](https://gist.github.com/nirbhabbarat/8fe32ccaaacc782272c9f49a753e97b4)
+
+#### Bereitstellung von Jenkins als CI/CD-Tool
+
+
 
 ---
 
@@ -712,13 +748,13 @@ Die Integration externer Systeme und Dienste in Kubernetes kann durch verschiede
 # 5. Bausteinsicht
 
 ## 5.1 Bausteindiagramm
-![05-Building-Block-View.png](./docs/images/05-Building-Block-View.png)
+![05-Building-Block-View.png](./images/05-Building-Block-View.png)
 
 ## 5.2 Bausteinbeschreibung
 
 ### **Kubernetes Cluster**
 
-![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
+![05-Building-Block-View-Level-1.png](./images/05-Building-Block-View-Level-1.png)
 
 - **Master Node**: Verwaltung und Steuerung des Clusters.
 - **Worker Nodes**: Ausführung der Container.
@@ -760,7 +796,7 @@ Die Integration externer Systeme und Dienste in Kubernetes kann durch verschiede
 
 # 6. Laufzeitsicht
 
-![kubernetes-workflow.png](./docs/images/06-Runtime-View.png)
+![kubernetes-workflow.png](./images/06-Runtime-View.png)
 
 ## 6.1 Hauptszenarien
 - **Deployment von Anwendungen**: Ablauf von der Code-Übernahme aus dem Repository, über die CI/CD Pipeline, bis zur Bereitstellung im Kubernetes Cluster.

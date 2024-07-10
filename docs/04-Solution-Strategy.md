@@ -181,6 +181,42 @@ Dies bildet die Grundlage für die Bereitstellung komplexerer Anwendungen und Pl
 
 ### Bereitstellung von Entwicklungsumgebungen mit Open Source Tools.
 
+Die Bereitstellung von Entwicklungsumgebungen mit Open Source Tools in einem Kubernetes-Cluster kann durch die Nutzung von Containern und Kubernetes-Ressourcen wie Deployments, Services und Persistent Volumes erfolgen. Hier sind die Schritte, um eine Entwicklungsumgebung mit gängigen Open Source Tools wie Git, Jenkins, und einer Container Registry bereitzustellen.
+
+#### Bereitstellung von GitLab als Versionsverwaltung
+
+GitLab ist eine beliebte Open Source Lösung zur Verwaltung von Quellcode
+
+![04-gitlab.png](./images/04-gitlab.png)
+
+Installieren Sie GitLab mit Helm
+
+Installieren Sie Helm, falls es noch nicht installiert ist
+```
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+
+Fügen Sie das GitLab-Repository hinzu
+```
+helm repo add gitlab https://charts.gitlab.io/
+```
+
+Installieren Sie GitLab
+```
+helm upgrade --install gitlab gitlab/gitlab \
+   --timeout 600s   \
+   --set global.hosts.domain=$(minikube ip).nip.io \
+   --set global.hosts.externalIP=$(minikube ip) \
+   --set certmanager-issuer.email=microtema@web.de \
+   --set gitlab-runner.runners.privileged=true
+```
+
+[Setup gitlab on minikube using helm3](https://gist.github.com/nirbhabbarat/8fe32ccaaacc782272c9f49a753e97b4)
+
+#### Bereitstellung von Jenkins als CI/CD-Tool
+
+
+
 ---
 
 ### Implementierung grundlegender Sicherheitsmaßnahmen.
