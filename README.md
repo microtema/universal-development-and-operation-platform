@@ -56,7 +56,7 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 
 ### Einrichtung eines Kubernetes Clusters zur Bereitstellung der Plattform.
 
-Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, können Sie [./docs./docs./images](https://kubernetes.io/docs/setup/production-environment/tools/./docs./docs./images/install-./docs./docs./images/) verwenden, 
+Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, können Sie [Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) verwenden, 
 da es eine bewährte Methode zur Einrichtung von produktionsreifen Kubernetes-Clustern ist. 
 Hier ist eine detaillierte Schritt-für-Schritt-Anleitung:
 
@@ -96,7 +96,7 @@ sudo apt-get install -y docker-ce
 
 **Kubernetes-Pakete installieren**
 
-Installieren Sie ./docs./docs./images, kubelet und kubectl auf allen Servern.
+Installieren Sie kubeadm, kubelet und kubectl auf allen Servern.
 
 ```
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl
@@ -105,8 +105,8 @@ sudo bash -c 'cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF'
 sudo apt-get update
-sudo apt-get install -y kubelet ./docs./docs./images kubectl
-sudo apt-mark hold kubelet ./docs./docs./images kubectl
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 ##### Schritt 2: Master-Node initialisieren
@@ -114,13 +114,13 @@ sudo apt-mark hold kubelet ./docs./docs./images kubectl
 Initialisieren Sie den Master-Node. Dies wird den Kubernetes-Cluster erstellen und konfigurieren.
 
 ```
-sudo ./docs./docs./images init --pod-network-cidr=192.168.0.0/16
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 ```
 
 [What is CIDR?](https://aws.amazon.com/what-is/cidr/#:~:text=Classless%20Inter%2DDomain%20Routing%20(CIDR)%20allows%20network%20routers%20to,specified%20by%20the%20CIDR%20suffix.)
 
 Nach der Initialisierung sehen Sie einen Ausgabeblock, der die Schritte beschreibt, die zur Fertigstellung der Konfiguration erforderlich sind. 
-Notieren Sie sich den ./docs./docs./images join-Befehl, der zum Hinzufügen von Worker-Nodes verwendet wird.
+Notieren Sie sich den kubeadm join-Befehl, der zum Hinzufügen von Worker-Nodes verwendet wird.
 
 **Kubectl konfigurieren**
 
@@ -142,10 +142,10 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 ##### Schritt 4: Worker-Nodes hinzufügen
 
-Führen Sie den von ./docs./docs./images init generierten ./docs./docs./images join-Befehl auf jedem Worker-Node aus, um sie dem Cluster hinzuzufügen. Beispiel:
+Führen Sie den von kubeadm init generierten kubeadm join-Befehl auf jedem Worker-Node aus, um sie dem Cluster hinzuzufügen. Beispiel:
 
 ```
-sudo ./docs./docs./images join <master-ip>:<master-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+sudo kubeadm join <master-ip>:<master-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 ```
 
 ##### Schritt 5: Überprüfen des Clusters
@@ -226,7 +226,7 @@ kubectl get services
 
 **Fazit**
 
-Mit diesen Schritten haben Sie einen Kubernetes-Cluster mit ./docs./docs./images eingerichtet und eine einfache Anwendung bereitgestellt. 
+Mit diesen Schritten haben Sie einen Kubernetes-Cluster mit Kubeadm eingerichtet und eine einfache Anwendung bereitgestellt. 
 Dies bildet die Grundlage für die Bereitstellung komplexerer Anwendungen und Plattformen.
 
 ---
