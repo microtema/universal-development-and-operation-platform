@@ -65,8 +65,6 @@ Initialisieren Sie den Master-Node. Dies wird den Kubernetes-Cluster erstellen u
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 ```
 
-[What is CIDR?](https://aws.amazon.com/what-is/cidr/#:~:text=Classless%20Inter%2DDomain%20Routing%20(CIDR)%20allows%20network%20routers%20to,specified%20by%20the%20CIDR%20suffix.)
-
 Nach der Initialisierung sehen Sie einen Ausgabeblock, der die Schritte beschreibt, die zur Fertigstellung der Konfiguration erforderlich sind. 
 Notieren Sie sich den kubeadm join-Befehl, der zum Hinzufügen von Worker-Nodes verwendet wird.
 
