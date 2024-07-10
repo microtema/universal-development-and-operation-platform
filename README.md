@@ -9,7 +9,7 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 - Implementierung grundlegender Sicherheitsmaßnahmen.
 - Integration bestehender Umsysteme des Unternehmens.
 
-![04-Context-And-Scope-View.png](./images/04-Context-And-Scope-View.png)
+![04-Context-And-Scope-View.png](./docs/images/04-Context-And-Scope-View.png)
 
 # 2. Randbedingungen
 
@@ -56,11 +56,11 @@ Dieses Dokument beschreibt die Systemarchitektur für eine universelle Plattform
 
 ### Einrichtung eines Kubernetes Clusters zur Bereitstellung der Plattform.
 
-Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, können Sie [./docs/images](https://kubernetes.io/docs/setup/production-environment/tools/./docs/images/install-./docs/images/) verwenden, 
+Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, können Sie [./docs./docs./images](https://kubernetes.io/docs/setup/production-environment/tools/./docs./docs./images/install-./docs./docs./images/) verwenden, 
 da es eine bewährte Methode zur Einrichtung von produktionsreifen Kubernetes-Clustern ist. 
 Hier ist eine detaillierte Schritt-für-Schritt-Anleitung:
 
-![05-Building-Block-View-Level-1.png](./images/05-Building-Block-View-Level-1.png)
+![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
 
 #### Voraussetzungen
 
@@ -96,7 +96,7 @@ sudo apt-get install -y docker-ce
 
 **Kubernetes-Pakete installieren**
 
-Installieren Sie ./docs/images, kubelet und kubectl auf allen Servern.
+Installieren Sie ./docs./docs./images, kubelet und kubectl auf allen Servern.
 
 ```
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl
@@ -105,8 +105,8 @@ sudo bash -c 'cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF'
 sudo apt-get update
-sudo apt-get install -y kubelet ./docs/images kubectl
-sudo apt-mark hold kubelet ./docs/images kubectl
+sudo apt-get install -y kubelet ./docs./docs./images kubectl
+sudo apt-mark hold kubelet ./docs./docs./images kubectl
 ```
 
 ##### Schritt 2: Master-Node initialisieren
@@ -114,13 +114,13 @@ sudo apt-mark hold kubelet ./docs/images kubectl
 Initialisieren Sie den Master-Node. Dies wird den Kubernetes-Cluster erstellen und konfigurieren.
 
 ```
-sudo ./docs/images init --pod-network-cidr=192.168.0.0/16
+sudo ./docs./docs./images init --pod-network-cidr=192.168.0.0/16
 ```
 
 [What is CIDR?](https://aws.amazon.com/what-is/cidr/#:~:text=Classless%20Inter%2DDomain%20Routing%20(CIDR)%20allows%20network%20routers%20to,specified%20by%20the%20CIDR%20suffix.)
 
 Nach der Initialisierung sehen Sie einen Ausgabeblock, der die Schritte beschreibt, die zur Fertigstellung der Konfiguration erforderlich sind. 
-Notieren Sie sich den ./docs/images join-Befehl, der zum Hinzufügen von Worker-Nodes verwendet wird.
+Notieren Sie sich den ./docs./docs./images join-Befehl, der zum Hinzufügen von Worker-Nodes verwendet wird.
 
 **Kubectl konfigurieren**
 
@@ -142,10 +142,10 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 ##### Schritt 4: Worker-Nodes hinzufügen
 
-Führen Sie den von ./docs/images init generierten ./docs/images join-Befehl auf jedem Worker-Node aus, um sie dem Cluster hinzuzufügen. Beispiel:
+Führen Sie den von ./docs./docs./images init generierten ./docs./docs./images join-Befehl auf jedem Worker-Node aus, um sie dem Cluster hinzuzufügen. Beispiel:
 
 ```
-sudo ./docs/images join <master-ip>:<master-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+sudo ./docs./docs./images join <master-ip>:<master-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 ```
 
 ##### Schritt 5: Überprüfen des Clusters
@@ -226,7 +226,7 @@ kubectl get services
 
 **Fazit**
 
-Mit diesen Schritten haben Sie einen Kubernetes-Cluster mit ./docs/images eingerichtet und eine einfache Anwendung bereitgestellt. 
+Mit diesen Schritten haben Sie einen Kubernetes-Cluster mit ./docs./docs./images eingerichtet und eine einfache Anwendung bereitgestellt. 
 Dies bildet die Grundlage für die Bereitstellung komplexerer Anwendungen und Plattformen.
 
 ---
@@ -239,7 +239,7 @@ Die Bereitstellung von Entwicklungsumgebungen mit Open Source Tools in einem Kub
 
 GitLab ist eine beliebte Open Source Lösung zur Verwaltung von Quellcode
 
-![04-gitlab.png](./images/04-gitlab.png)
+![04-gitlab.png](./docs/images/04-gitlab.png)
 
 Installieren Sie GitLab mit Helm
 
@@ -748,13 +748,13 @@ Die Integration externer Systeme und Dienste in Kubernetes kann durch verschiede
 # 5. Bausteinsicht
 
 ## 5.1 Bausteindiagramm
-![05-Building-Block-View.png](./images/05-Building-Block-View.png)
+![05-Building-Block-View.png](./docs/images/05-Building-Block-View.png)
 
 ## 5.2 Bausteinbeschreibung
 
 ### **Kubernetes Cluster**
 
-![05-Building-Block-View-Level-1.png](./images/05-Building-Block-View-Level-1.png)
+![05-Building-Block-View-Level-1.png](./docs/images/05-Building-Block-View-Level-1.png)
 
 - **Master Node**: Verwaltung und Steuerung des Clusters.
 - **Worker Nodes**: Ausführung der Container.
@@ -796,7 +796,7 @@ Die Integration externer Systeme und Dienste in Kubernetes kann durch verschiede
 
 # 6. Laufzeitsicht
 
-![kubernetes-workflow.png](./images/06-Runtime-View.png)
+![kubernetes-workflow.png](./docs/images/06-Runtime-View.png)
 
 ## 6.1 Hauptszenarien
 - **Deployment von Anwendungen**: Ablauf von der Code-Übernahme aus dem Repository, über die CI/CD Pipeline, bis zur Bereitstellung im Kubernetes Cluster.
