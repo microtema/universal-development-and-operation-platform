@@ -2,7 +2,7 @@
 
 ## 4.1 Hauptziele
 
-### Einrichtung eines Kubernetes Clusters zur Bereitstellung der Plattform.
+### 4.1.1 Einrichtung eines Kubernetes Clusters zur Bereitstellung der Plattform.
 
 Um einen Kubernetes-Cluster zur Bereitstellung einer Plattform einzurichten, können Sie [Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/) verwenden, 
 da es eine bewährte Methode zur Einrichtung von produktionsreifen Kubernetes-Clustern ist. 
@@ -179,7 +179,7 @@ Dies bildet die Grundlage für die Bereitstellung komplexerer Anwendungen und Pl
 
 ---
 
-### Bereitstellung von Entwicklungsumgebungen mit Open Source Tools.
+### 4.1.2 Bereitstellung von Entwicklungsumgebungen mit Open Source Tools.
 
 Die Bereitstellung von Entwicklungsumgebungen mit Open Source Tools in einem Kubernetes-Cluster kann durch die Nutzung von Containern und Kubernetes-Ressourcen wie Deployments, Services und Persistent Volumes erfolgen. Hier sind die Schritte, um eine Entwicklungsumgebung mit gängigen Open Source Tools wie Git, Jenkins, und einer Container Registry bereitzustellen.
 
@@ -215,11 +215,129 @@ helm upgrade --install gitlab gitlab/gitlab \
 
 #### Bereitstellung von Jenkins als CI/CD-Tool
 
+Jenkins ist ein weit verbreitetes Open Source CI/CD-Tool.
 
+**Installieren Sie Jenkins mit Helm**
+
+Fügen Sie das Jenkins-Repository hinzu
+
+```
+helm repo add jenkins https://charts.jenkins.io
+```
+
+Installieren Sie Jenkins:
+
+```
+helm install jenkins jenkins/jenkins --set controller.adminPassword=admin --set controller.serviceType=LoadBalancer
+```
 
 ---
 
-### Implementierung grundlegender Sicherheitsmaßnahmen.
+**Zugriff auf Jenkins:**
+
+Holen Sie sich die Jenkins-URL:
+
+```
+kubectl get svc --namespace default jenkins
+```
+
+Greifen Sie über die externe IP oder den LoadBalancer auf Jenkins zu.
+
+
+### 4.1.3 Bereitstellung eines Entwicklungs-Pods mit grundlegenden Tools
+
+**Erstellen Sie ein Deployment für einen Entwicklungs-Pod:**
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-environment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-environment
+  template:
+    metadata:
+      labels:
+        app: dev-environment
+    spec:
+      containers:
+      - name: dev-container
+        image: ubuntu
+        command: ["/bin/bash", "-c", "while true; do sleep 30; done;"]
+        volumeMounts:
+        - name: dev-storage
+          mountPath: /home/dev
+  volumes:
+  - name: dev-storage
+    persistentVolumeClaim:
+      claimName: dev-pvc
+```
+
+**Erstellen Sie eine PersistentVolumeClaim für den Entwicklungs-Pod:**
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dev-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+**Anwenden der Manifestdateien:**
+
+```
+kubectl apply -f dev-environment-deployment.yaml
+kubectl apply -f dev-environment-pvc.yaml
+```
+
+**Installieren Sie grundlegende Tools im Entwicklungs-Pod:**
+
+```
+kubectl exec -it $(kubectl get pod -l app=dev-environment -o jsonpath='{.items[0].metadata.name}') -- /bin/bash
+```
+
+**Installieren Sie Git, Docker, und andere Tools:**
+
+```
+apt-get update
+apt-get install -y git docker.io
+```
+
+**Fazit**
+
+Durch die Bereitstellung dieser grundlegenden Open Source Tools in einem Kubernetes-Cluster schaffen Sie eine Entwicklungsumgebung, 
+die Entwicklern eine solide Grundlage für die Entwicklung, das Testen und die Bereitstellung ihrer Anwendungen bietet. 
+Kubernetes ermöglicht es Ihnen, diese Tools einfach zu skalieren und zu verwalten, was die Effizienz und Produktivität der Entwicklerteams erheblich steigert.
+
+> Die Bereitstellung von Entwicklungsumgebungen und Anwendungen in Kubernetes-Clustern kann potenziell mehrere Sicherheitslücken mit sich bringen. 
+> Hier sind einige der häufigsten Sicherheitslücken und mögliche Maßnahmen zur Behebung dieser Probleme:
+
+* Unautorisierter Zugriff
+* Unverschlüsselte Kommunikation
+* Schwachstellen in Container-Images
+* Unsichere Konfigurationen
+* Geheimnisse (Secrets) im Klartext
+* Übermäßig privilegierte Container
+* Fehlende Überwachung und Protokollierung
+* Schwachstellen im Netzwerk
+* Fehlende Sicherheitsupdates
+
+**Fazit**
+
+Sicherheitslücken in Kubernetes-Clustern können durch eine Kombination aus bewährten Sicherheitspraktiken, 
+regelmäßigen Überprüfungen und der Verwendung von Sicherheitswerkzeugen minimiert werden. Es ist wichtig, 
+eine ganzheitliche Sicherheitsstrategie zu verfolgen, die alle Aspekte des Kubernetes-Clusters abdeckt, 
+einschließlich Zugriffskontrolle, Netzwerksicherheit, Geheimnisverwaltung und kontinuierlicher Überwachung.
+
+### 4.1.4 Implementierung grundlegender Sicherheitsmaßnahmen.
 
 Sicherheitslösungen sind ein wesentlicher Bestandteil jeder Kubernetes-Umgebung, um die Integrität, Vertraulichkeit und Verfügbarkeit der Anwendungen und Daten zu gewährleisten. 
 Hier sind einige empfohlene Sicherheitslösungen, die Sie in Ihrem Kubernetes-Cluster implementieren sollten:
@@ -458,7 +576,7 @@ dass Ihre Anwendungen und Daten geschützt sind.
 
 ---
 
-### Integration externer Systeme und Dienste.
+### 4.1.5 Integration externer Systeme und Dienste.
 
 Die Integration externer Systeme und Dienste in einen Kubernetes-Cluster kann auf verschiedene Weisen erfolgen. 
 Hier sind einige der gängigsten Methoden, die Sie verwenden können:
